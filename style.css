@@ -25,7 +25,7 @@
 }
 
 .form-control::placeholder {
-    color: #9b9b9b;
+    color: #afafaf;
 }
 
 .recipeImage {
@@ -48,10 +48,16 @@
     padding: 15px 10px;
 }
 
+
 .recipeLink {
     text-decoration: none;
     color: #000000;
     gap: 10px;
+    cursor: pointer;
+}
+
+.recipeLink:hover {
+    transform: translate(10px);
 }
 
 .recipePublisher {
@@ -72,6 +78,6 @@
 }
 
 .recipeUI {
-    height: 786px;
+    height: 680px;
     overflow-y: scroll;
 }

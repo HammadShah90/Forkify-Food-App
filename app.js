@@ -6,12 +6,19 @@ const recipeUI = document.querySelector(".recipeUI")
 // console.log(recipeUI);
 const spinnerBorder = document.querySelector(".spinner-border")
 // console.log(spinnerBorder);
+const recipeDetail = document.querySelector(".recipeDetail")
+// console.log(recipeDetail);
 
 const fetchRecipeData = (recipe) => {
     fetch(`https://forkify-api.herokuapp.com/api/v2/recipes?search=${recipe}`)
-        .then((response) => response.json())
+        .then((response) => {
+            if (!response == "ok") {
+                return console.log("Some fault in this API");
+            }
+            return response.json()
+        })
         .then((recipeData) => {
-            console.log(recipeData.data.recipes)
+            // console.log(recipeData.data.recipes)
             const getRecipeData = recipeData.data.recipes
             recipesSearchItemsList(getRecipeData)
         })
@@ -26,7 +33,7 @@ const recipesSearchItemsList = (getRecipeData) => {
     const setRecipeList = getRecipeData.map((recipeList) => {
         console.log(recipeList);
         const createUI = `<li class="recipeList">
-                            <a class="d-flex align-items-center recipeLink" href="" onclick="wholeRecipe('${recipeList.id}')">
+                            <a class="d-flex align-items-center recipeLink" onclick="getSingleRecipe('${recipeList.id}')">
                                 <img src="${recipeList.image_url}" alt="" class="recipeImage">
                                 <div class="">
                                     <h4 class="recipeTitle mb-0">${recipeList.title}</h4>
@@ -34,15 +41,50 @@ const recipesSearchItemsList = (getRecipeData) => {
                                 </div>
                             </a>
                           </li>`
+
+        // console.log(recipeList.id);
         return createUI
     })
 
-    recipeUI.innerHTML = setRecipeList
+    const dataCreateUI = setRecipeList.join("")
+
+
+
+    recipeUI.innerHTML = dataCreateUI
 }
+
+
+const getSingleRecipe = (recipeID) => {
+
+    console.log(recipeID);
+
+    fetch(`https://forkify-api.herokuapp.com/api/v2/recipes/:${recipeID}`)
+        .then((response) => {
+        if (!response == "ok") {
+            return console.log("Some fault in this API");
+        }
+
+        console.log(response);
+
+        return response.json()
+    })
+    .then((getSingleRecipeData) => {
+        return console.log(getSingleRecipeData);
+    })
+
+
+
+}
+
+
+
+
+
+
 
 const searchRecipeItem = () => {
 
-    console.log(searchRecipes.value);
+    // console.log(searchRecipes.value);
 
     // spinnerBorder.classList.remove("hidden");
 
